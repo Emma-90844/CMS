@@ -4,7 +4,7 @@ const express = require('express')
 const cookieParser = require('cookie-parser');
 const fileUpload = require('express-fileupload');
 const cors = require('cors');
-const chalk = require('chalk')
+const chalk = require('chalk');
 
 
 
