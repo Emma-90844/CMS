@@ -70,7 +70,7 @@ const userCtrl = {
             const isMatch = await bcrypt.compare(password, user.password);
             if(!isMatch) return res.status(400).json({msh: "Password is incorrect"});
 
-            console.log(user)
+            // console.log(user)
 
             //We generate a refresh token and store it in cookies
             const refresh_token = createRefreshToken({id: user._id});
@@ -87,9 +87,21 @@ const userCtrl = {
     },
     getAccessToken: (req, res) => {
         try {
+            //'refreshtoken' in the login res.cookie
+            const rf_token = req.cookies.refreshtoken
+            if(!rf_token) return res.status(400).json({msg: "Please login now!"});
 
-        } catch(err) {
+            jwt.verify(rf_token, process.env.REFRESH_TOKEN_SECRET, (err, user) => {
+                if(err) return res.status(400).json({msg: "Please login now"})
+
+                const access_token = createAccessToken({id: user.id});
+                res.json({access_token})
+            });
+
             
+            
+        } catch(err) {
+            return res.status(500).json({msg: err.message});
         }
     }
 
