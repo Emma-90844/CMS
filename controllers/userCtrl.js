@@ -67,6 +67,10 @@ const userCtrl = {
             const user = await Users.findOne({email});
             if(!user) return res.status(400).json({msg: "This email does not exist."});
 
+            const isMatch = await bcrypt.compare(password, user.password);
+            if(!isMatch) return res.status(400).json({msh: "Password is incorrect"});
+            
+
 
         } catch (err) {
             return res.status(500).json({msg: err.message})
