@@ -43,9 +43,32 @@ const userCtrl = {
     activateEmail: async (req, res) => {
         try {
             const { activation_token } = req.body;
-            const user = jwt.verity( activation_token, process.env.ACTIVATION_TOKEN_SECRET )
+            const user = jwt.verify( activation_token, process.env.ACTIVATION_TOKEN_SECRET )
             console.log(user);
+            const {name, email, password} = user
+            const check = await Users.findOne({email})
+            if(check) return res.status(400).json({msg:"This email already exist"});
+
+            const newUser = new Users({
+                name, email, password
+        });
+            await newUser.save();
+
+            res.json({msg: "Account has been activated!"});
+
+
         } catch(err){
+            return res.status(500).json({msg: err.message});
+        }
+    },
+    login: async (req, res) => {
+        try {
+            const {email, password} = req.body;
+            const user = await Users.findOne({email});
+            if(!user) return res.status(400).json({msg: "This email does not exist."});
+
+
+        } catch (err) {
             return res.status(500).json({msg: err.message})
         }
     }
