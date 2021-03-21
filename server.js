@@ -25,9 +25,10 @@ app.use('/user', require('./routes/userRouter'))
 const URI = process.env.MONGODB_URL;
 mongoose.connect(URI, {
     useCreateIndex: true,
-    useFindModify: false,
+    useFindAndModify: false,
     useNewUrlparser: true,
-    useUnifiedTopology:true
+    useUnifiedTopology:true,
+
 }, err => {
     
     if(err)throw err;
