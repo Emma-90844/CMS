@@ -164,7 +164,7 @@ const userCtrl = {
             return res.status(500).json({msg: err.message})
         }
     },
-    update
+    updatelog
 
 }
 
