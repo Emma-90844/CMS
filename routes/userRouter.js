@@ -24,7 +24,7 @@ router.get('/logout',  userCtrl.logout);
 
 router.patch('/update', auth, userCtrl.updateUser);
 
-router.patch('update_role/:id', auth, authAdmin, userCtrl.updateUsersRole);
+router.patch('/update_role/:id', auth, authAdmin, userCtrl.updateUsersRole);
 
 module.exports = router;
 
