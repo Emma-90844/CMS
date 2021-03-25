@@ -26,6 +26,10 @@ router.patch('/update', auth, userCtrl.updateUser);
 
 router.patch('/update_role/:id', auth, authAdmin, userCtrl.updateUsersRole);
 
+router.delete('/delete/:id', auth, authAdmin, userCtrl.deleteUser);
+
+
+
 module.exports = router;
 
 
