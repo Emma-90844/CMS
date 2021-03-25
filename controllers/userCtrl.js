@@ -69,7 +69,7 @@ const userCtrl = {
             if(!user) return res.status(400).json({msg: "This email does not exist."});
 
             const isMatch = await bcrypt.compare(password, user.password);
-            if(!isMatch) return res.status(400).json({msh: "Password is incorrect"});
+            if(!isMatch) return res.status(400).json({msg: "Password is incorrect"});
 
             // console.log(user)
 
@@ -97,10 +97,7 @@ const userCtrl = {
 
                 const access_token = createAccessToken({id: user.id});
                 res.json({access_token})
-            });
-
-            
-            
+            });               
         } catch(err) {
             return res.status(500).json({msg: err.message});
         }
@@ -177,16 +174,18 @@ const userCtrl = {
     },
     updateUsersRole: async (req, res) => {
         try {
-            const {role } = req.body;
-            await Users.findOneAndUpdate({_id: req.user.id}, {
-                role, avatar
+            const { role } = req.body;
+
+            await Users.findOneAndUpdate({_id: req.params.id}, {
+                role
             });
+
             res.json({msg: "Updated successfully!"});
-        } catch(err){
+
+        } catch(err){         
             return res.status(500).json({msg: err.message});
         }
-    }
-
+    },
 }
 
 
